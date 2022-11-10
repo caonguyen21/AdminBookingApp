@@ -33,6 +33,15 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/statusks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/tenkstext"
+            android:src="@drawable/ic_baseline_circle_24" />
+
         <RatingBar
             android:id="@+id/ratingBar42"
             style="@style/Widget.AppCompat.RatingBar.Small"

@@ -31,21 +31,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btndelete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/blue"
-            android:gravity="center"
-            android:text="Xóa Khách sạn"
-            android:textAllCaps="true"
-            android:textSize="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
@@ -88,7 +73,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/img" />
+                                android:src="@drawable/ic_baseline_image_24" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -109,7 +94,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/img" />
+                                android:src="@drawable/ic_baseline_image_24" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -130,7 +115,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/img" />
+                                android:src="@drawable/ic_baseline_image_24" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -151,7 +136,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:src="@drawable/img" />
+                                android:src="@drawable/ic_baseline_image_24" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
                 </GridLayout>

@@ -48,7 +48,6 @@ public class DetailHotelActivity extends AppCompatActivity {
     MenuItem menuItem;
     DatabaseReference reference;
     List<Khachsan> list;
-    Button deleteHotel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +64,6 @@ public class DetailHotelActivity extends AppCompatActivity {
         //end toolbar
 
         auth = FirebaseAuth.getInstance();
-        deleteHotel = findViewById(R.id.btndelete);
-        deleteHotel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteHotel();
-                finish();
-            }
-        });
         txttenks = findViewById(R.id.txtTenks);
         txtdiachi = findViewById(R.id.txtDiachi);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -134,24 +125,6 @@ public class DetailHotelActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void deleteHotel() {
-        String txtks = txttenks.getText().toString();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("TPHCM");
-        reference.child(txtks).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                showToast("Xóa khách sạn thành công!");
-                finish();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                showToast("Xóa khách sạn thất bại!");
-            }
-        });
-    }
-
     public void showname() {
         String tenks = khachsan.getTenks();
         reference = FirebaseDatabase.getInstance().getReference("TPHCM");

@@ -76,6 +76,14 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> im
                 view.getContext().startActivity(intentbk);
             }
         });
+
+        if (!ks.getTrangthai()) {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24);
+            holder.statusks.setImageDrawable(drawable);
+        } else {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24_green);
+            holder.statusks.setImageDrawable(drawable);
+        }
     }
 
     @Override
@@ -117,9 +125,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> im
         ImageView img;
         TextView tenks, diachi, gia;
         RelativeLayout ln_linear;
-
+        ImageView statusks;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            statusks = itemView.findViewById(R.id.statusks);
             img = itemView.findViewById(R.id.img1);
             tenks = itemView.findViewById(R.id.tenkstext);
             diachi = itemView.findViewById(R.id.diachitext);

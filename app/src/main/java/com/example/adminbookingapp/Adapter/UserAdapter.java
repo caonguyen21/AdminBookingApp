@@ -1,34 +1,31 @@
 package com.example.adminbookingapp.Adapter;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminbookingapp.Admin.DetailHotelActivity;
-import com.example.adminbookingapp.Model.Khachsan;
 import com.example.adminbookingapp.Model.User;
 import com.example.adminbookingapp.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     List<User> list;
+
     public UserAdapter(List<User> list) {
         this.list = list;
     }
@@ -42,7 +39,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user, parent, false);
-        return new ViewHolder (v);
+        return new ViewHolder(v);
     }
 
     @Override
@@ -64,29 +61,62 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
                     .centerCrop()
                     .into(holder.img);
         }
-
-        /*holder.itemView.setOnClickListener(new View.OnClickListener() {
+        if (!user.isStatus()) {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24);
+            holder.status.setImageDrawable(drawable);
+        } else {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24_green);
+            holder.status.setImageDrawable(drawable);
+        }
+        holder.onOffTrangThai.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intentbk = new Intent(view.getContext(), DetailHotelActivity.class);
-                intentbk.putExtra("clickdetail", user);
-                view.getContext().startActivity(intentbk);
+            public void onClick(View v) {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("User");
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            User user1 = child.getValue(User.class);
+                            if (user1.getEmail().equals(user1.getEmail())) {
+                                if (user1.isStatus()) {
+                                    reference.child(child.getKey()).child("status").setValue(false);
+                                    Toast.makeText(v.getContext(), "Khóa tài khoản người dùng!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    reference.child(child.getKey()).child("status").setValue(true);
+                                    Toast.makeText(v.getContext(), "Mở tài khoản người dùng!", Toast.LENGTH_SHORT).show();
+                                }
+
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(v.getContext(), "Warning!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });*/
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView img;
+        ImageView img, status;
         TextView tenuser, emailuser, sdtuser;
         RelativeLayout relativeLayout;
+        private TextView onOffTrangThai;
+        //  private SwipeLayout swipeLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = itemView.findViewById(R.id.img1);
+            //  swipeLayout = itemView.findViewById(R.id.swipeAccount);
+            status = itemView.findViewById(R.id.status);
+            img = itemView.findViewById(R.id.avatarUser);
             tenuser = itemView.findViewById(R.id.tenUser);
             emailuser = itemView.findViewById(R.id.emailUser);
             sdtuser = itemView.findViewById(R.id.sdtUser);
             relativeLayout = itemView.findViewById(R.id.ln_linear);
+            onOffTrangThai = itemView.findViewById(R.id.xoataikhoan);
         }
     }
 }
