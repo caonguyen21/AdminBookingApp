@@ -57,7 +57,7 @@ public class QLKhachSanFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_q_l_khach_hang, container, false);
+        view = inflater.inflate(R.layout.fragment_q_l_khach_san, container, false);
         initUI(view);
 
         AppCompatActivity activity = (AppCompatActivity) getActivity();
@@ -90,6 +90,54 @@ public class QLKhachSanFragment extends Fragment {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Khachsan ks = child.getValue(Khachsan.class);
                     list.add(ks);
+                }
+                apdapterRoom = new RoomAdapter(list);
+                recyclerView.setAdapter(apdapterRoom);
+                apdapterRoom.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Khong the lay du lieu!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getlistOn() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Khachsan ks = child.getValue(Khachsan.class);
+                    if (ks.getTrangthai().equals(true)) {
+                        list.add(ks);
+                    }
+                }
+                apdapterRoom = new RoomAdapter(list);
+                recyclerView.setAdapter(apdapterRoom);
+                apdapterRoom.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Khong the lay du lieu!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void getlistOff() {
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    Khachsan ks = child.getValue(Khachsan.class);
+                    if (ks.getTrangthai().equals(false)) {
+                        list.add(ks);
+                    }
                 }
                 apdapterRoom = new RoomAdapter(list);
                 recyclerView.setAdapter(apdapterRoom);
@@ -215,6 +263,18 @@ public class QLKhachSanFragment extends Fragment {
                 // create and show the alert dialog
                 AlertDialog dialog = builder.create();
                 dialog.show();
+
+            case R.id.menu_xoaFiller:
+                getlist();
+                break;
+
+            case R.id.menu_statusOn:
+                getlistOn();
+                break;
+
+            case R.id.menu_statusOff:
+                getlistOff();
+                break;
 
             default:
                 break;

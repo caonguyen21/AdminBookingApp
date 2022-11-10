@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,7 @@ public class DetailHotelActivity extends AppCompatActivity {
     MenuItem menuItem;
     DatabaseReference reference;
     List<Khachsan> list;
+    Button deleteHotel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,14 @@ public class DetailHotelActivity extends AppCompatActivity {
         //end toolbar
 
         auth = FirebaseAuth.getInstance();
+        deleteHotel = findViewById(R.id.btndelete);
+        deleteHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteHotel();
+                finish();
+            }
+        });
         txttenks = findViewById(R.id.txtTenks);
         txtdiachi = findViewById(R.id.txtDiachi);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -124,6 +135,39 @@ public class DetailHotelActivity extends AppCompatActivity {
         });
     }
 
+    public void deleteHotel() {
+        String txtks = txttenks.getText().toString();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("TPHCM");
+        reference.child(txtks).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                showToast("Xóa khách sạn thành công!");
+                finish();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showToast("Xóa khách sạn thất bại!");
+            }
+        });
+    }
+
+    public void showname() {
+        String tenks = khachsan.getTenks();
+        reference = FirebaseDatabase.getInstance().getReference("TPHCM");
+        reference.child(tenks).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                toolbartenks.setText(tenks);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                toolbartenks.setText("");
+            }
+        });
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Boolean tt = khachsan.getTrangthai();
@@ -175,31 +219,6 @@ public class DetailHotelActivity extends AppCompatActivity {
                 });
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void showname() {
-        String tenks = khachsan.getTenks();
-        reference = FirebaseDatabase.getInstance().getReference("TPHCM");
-        reference.child(tenks).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                toolbartenks.setText(tenks);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                toolbartenks.setText("");
-            }
-        });
-    }
-
-    public void reload() {
-        Intent intent = getIntent();
-        overridePendingTransition(1000, 1000);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        finish();
-        overridePendingTransition(0, 0);
-        startActivity(intent);
     }
 
     private void showToast(String mess) {
