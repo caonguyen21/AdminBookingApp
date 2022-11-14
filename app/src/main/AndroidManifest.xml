@@ -19,6 +19,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
         </activity>
 
         <activity
@@ -32,11 +33,37 @@
             android:name=".Admin.AdminMainScreem"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
+        </activity>
+
+        <activity
+            android:name=".Owner.OwnewMainScreem"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Login.SignIn"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
+        </activity>
+        <activity
+            android:name=".Login.SignUp"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
+        </activity>
+        <activity
+            android:name=".Welcome"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
         </activity>
 
 

@@ -50,7 +50,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.emailuser.setText(user.getEmail());
         holder.sdtuser.setText(user.getPhone());
 
-        if (user.getImage().equals("")) {
+        if (user.getImage().equals("1")) {
             Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_outline_account_circle_24);
             holder.img.setImageDrawable(drawable);
         } else {
@@ -77,7 +77,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot child : snapshot.getChildren()) {
                             User user1 = child.getValue(User.class);
-                            if (user1.getEmail().equals(user1.getEmail())) {
+                            if (user1.getEmail().equals(user.getEmail())) {
                                 if (user1.isStatus()) {
                                     reference.child(child.getKey()).child("status").setValue(false);
                                     Toast.makeText(v.getContext(), "Khóa tài khoản người dùng!", Toast.LENGTH_SHORT).show();

@@ -1,19 +1,26 @@
 package com.example.adminbookingapp.Model;
 
 public class Owner {
-    String username, email, phone, image;
-    Boolean trangthai;
+    String username, email, phone, image, tenks;
 
     public Owner() {
 
     }
 
-    public Owner(String username, String email, String phone, String image, Boolean trangthai) {
+    public Owner(String username, String email, String phone, String image, String tenks) {
         this.username = username;
         this.email = email;
         this.phone = phone;
         this.image = image;
-        this.trangthai = trangthai;
+        this.tenks = tenks;
+    }
+
+    public String getTenks() {
+        return tenks;
+    }
+
+    public void setTenks(String tenks) {
+        this.tenks = tenks;
     }
 
     public String getUsername() {
@@ -48,11 +55,4 @@ public class Owner {
         this.image = image;
     }
 
-    public Boolean getTrangthai() {
-        return trangthai;
-    }
-
-    public void setTrangthai(Boolean trangthai) {
-        this.trangthai = trangthai;
-    }
 }

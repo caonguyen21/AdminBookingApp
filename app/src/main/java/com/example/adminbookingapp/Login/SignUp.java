@@ -28,7 +28,7 @@ import java.util.Map;
 public class SignUp extends AppCompatActivity implements View.OnClickListener {
     TextInputEditText edt_Password, edt_Nhaplaipassword;
     Button DangKy;
-    EditText edt_Hoten, edt_Sdt, edt_Email;
+    EditText edt_Hoten, edt_Sdt, edt_Email, edttenks;
     FirebaseAuth mAuth;
     ProgressDialog progressDialog;
     DatabaseReference databaseReference;
@@ -45,6 +45,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         edt_Sdt = findViewById(R.id.edt_Sdt);
         edt_Password = findViewById(R.id.edt_Password);
         edt_Nhaplaipassword = findViewById(R.id.edt_Nhaplaipassword);
+        edttenks = findViewById(R.id.edttenks);
         DangKy = findViewById(R.id.btn_Dangky);
         DangKy.setOnClickListener(this);
         progressDialog = new ProgressDialog(this);
@@ -66,6 +67,13 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         String password = edt_Password.getText().toString().trim();
         String confirmpassword = edt_Nhaplaipassword.getText().toString().trim();
         String phone = edt_Sdt.getText().toString().trim();
+        String tenks = edttenks.getText().toString().trim();
+
+        if (tenks.isEmpty()) {
+            edttenks.setError("Vui lòng nhập tên khách sạn!");
+            edttenks.requestFocus();
+            return;
+        }
 
         if (username.isEmpty()) {
             edt_Hoten.setError("Vui lòng nhập họ tên!");
@@ -138,6 +146,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                             owner.put("email", email);
                             owner.put("username", username);
                             owner.put("phone", phone);
+                            owner.put("tenks", tenks);
                             databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(owner);
                             Toast.makeText(SignUp.this, "Tạo tài khoản thành công.", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(SignUp.this, SignIn.class));

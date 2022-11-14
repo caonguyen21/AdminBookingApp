@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1C1C1C"
-    android:fillViewport="true"
-    tools:context=".UserProfile.SignUp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,24 +15,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="Tạo tài khoản đối tác"
+            android:textColor="@color/white"
+            android:textSize="35dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Đăng ký tài khoản"
+            android:text="Tạo tài khoản để đăng ký và quản lý chỗ nghỉ."
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/edttenks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_baseline_apartment_24"
+            android:drawablePadding="10dp"
+            android:hint="Tên khách sạn"
+            android:inputType="text"
             android:textColor="@color/white"
-            android:textSize="40dp"
-            android:textStyle="bold" />
+            android:textColorHint="	#808080" />
 
         <EditText
             android:id="@+id/edt_Hoten"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/white"
             android:drawableStart="@drawable/ic_outline_account_circle_24"
             android:drawablePadding="10dp"
-            android:hint="Họ tên"
+            android:hint="Họ tên chủ sở hữu"
             android:inputType="text"
             android:textColor="@color/white"
             android:textColorHint="	#808080" />
@@ -115,10 +133,10 @@
             android:id="@+id/btn_Dangky"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/blue"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
+            android:background="@color/blue"
             android:text="Đăng ký"
             android:textStyle="bold" />
     </LinearLayout>
