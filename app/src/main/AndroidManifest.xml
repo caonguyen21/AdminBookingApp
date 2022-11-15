@@ -37,6 +37,13 @@
         </activity>
 
         <activity
+            android:name=".Owner.DetailHoteOwnerlActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
+        </activity>
+
+        <activity
             android:name=".Owner.OwnewMainScreem"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
@@ -53,11 +60,24 @@
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
+
+        <activity
+            android:name=".Owner.AddHotelActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+        </activity>
+
         <activity
             android:name=".Login.SignUp"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
+        </activity>
+
+        <activity
+            android:name=".Owner.UpdateHotelActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
         </activity>
         <activity
             android:name=".Welcome"

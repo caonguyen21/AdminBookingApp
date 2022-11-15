@@ -1,5 +1,7 @@
 package com.example.adminbookingapp.Adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -12,11 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.adminbookingapp.Admin.DetailHotelActivity;
 import com.example.adminbookingapp.Model.Khachsan;
-import com.example.adminbookingapp.Owner.QLKS_OwnerFragment;
+import com.example.adminbookingapp.Owner.DetailHoteOwnerlActivity;
+import com.example.adminbookingapp.Owner.UpdateHotelActivity;
 import com.example.adminbookingapp.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,16 +31,17 @@ import java.util.Locale;
 
 public class RoomOwnerAdapter extends RecyclerView.Adapter<RoomOwnerAdapter.ViewHolder> {
     List<Khachsan> list;
-    QLKS_OwnerFragment context;
 
-    public RoomOwnerAdapter(QLKS_OwnerFragment context, List<Khachsan> list) {
+    public RoomOwnerAdapter(List<Khachsan> list) {
         this.list = list;
-        this.context = context;
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if(list != null){
+            return list.size();
+        }
+        return 0;
     }
 
     @NonNull
@@ -73,19 +75,66 @@ public class RoomOwnerAdapter extends RecyclerView.Adapter<RoomOwnerAdapter.View
                     .into(holder.img);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ln_linear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentbk = new Intent(view.getContext(), DetailHotelActivity.class);
-                intentbk.putExtra("clickdetail", ks);
+                Intent intentbk = new Intent(view.getContext(), DetailHoteOwnerlActivity.class);
+                intentbk.putExtra("clickdetailOwner", ks);
                 view.getContext().startActivity(intentbk);
+            }
+        });
+
+        if (!ks.getTrangthai()) {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24);
+            holder.statusks.setImageDrawable(drawable);
+        } else {
+            Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24_green);
+            holder.statusks.setImageDrawable(drawable);
+        }
+
+        holder.edit_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sua = new Intent(view.getContext(), UpdateHotelActivity.class);
+                sua.putExtra("clickEdit", ks);
+                view.getContext().startActivity(sua);
+            }
+        });
+
+        holder.delete_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(view.getContext())
+                        .setTitle("")
+                        .setMessage("Bạn có muốn xóa khách sạn này không!")
+                        .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("TPHCM");
+                                myRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        list.clear();
+                                        myRef.child(String.valueOf(ks.getTenks())).removeValue();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Không", null)
+                        .show();
             }
         });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView tenks, diachi, gia;
+        TextView tenks, diachi, gia, delete_book, edit_book;
+        ;
         RelativeLayout ln_linear;
         ImageView statusks;
 
@@ -97,6 +146,8 @@ public class RoomOwnerAdapter extends RecyclerView.Adapter<RoomOwnerAdapter.View
             diachi = itemView.findViewById(R.id.diachitext);
             gia = itemView.findViewById(R.id.giatext);
             ln_linear = itemView.findViewById(R.id.ln_linear);
+            delete_book = itemView.findViewById(R.id.delete_book);
+            edit_book = itemView.findViewById(R.id.edit_book);
         }
     }
 }

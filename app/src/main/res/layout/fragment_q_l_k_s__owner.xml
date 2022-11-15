@@ -28,11 +28,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcv_khachsan"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingHorizontal="15dp" />
+        android:layout_height="200dp"
+        android:id="@+id/swiperefreshlayout">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_khachsan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="15dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,8 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Thêm khách sạn của bạn!"
+            android:text="Đăng ký khách sạn của bạn!"
             android:textColor="@color/white"
             android:textSize="30dp"
             android:textStyle="bold"
@@ -60,9 +66,10 @@
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:text="Đăng ký"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="20dp"
-            android:text="Tạo khách sạn"
             android:visibility="gone" />
 
     </LinearLayout>

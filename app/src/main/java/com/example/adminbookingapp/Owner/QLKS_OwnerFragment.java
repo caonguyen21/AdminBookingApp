@@ -1,17 +1,26 @@
 package com.example.adminbookingapp.Owner;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.adminbookingapp.Adapter.RoomOwnerAdapter;
 import com.example.adminbookingapp.Model.Khachsan;
@@ -29,14 +38,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QLKS_OwnerFragment extends Fragment {
+public class QLKS_OwnerFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     TextView idxinchao, empty;
     Button empty2;
     DatabaseReference reference;
     RoomOwnerAdapter roomOwnerAdapter;
-    List<Khachsan> room;
+    List<Khachsan> list;
     FirebaseAuth auth;
     RecyclerView recyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     String tenks = "";
     private String userID;
     private FirebaseUser user;
@@ -56,7 +66,7 @@ public class QLKS_OwnerFragment extends Fragment {
         //Toolbar welcome
         wellcome();
 
-        room = new ArrayList<>();
+        list = new ArrayList<>();
         auth = FirebaseAuth.getInstance();
         reference = FirebaseDatabase.getInstance().getReference("TPHCM");
         recyclerView = view.findViewById(R.id.rcv_khachsan);
@@ -64,7 +74,8 @@ public class QLKS_OwnerFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        roomOwnerAdapter = new RoomOwnerAdapter(this, room);
+        roomOwnerAdapter = new RoomOwnerAdapter(list);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(roomOwnerAdapter);
         //thay doi layout khi co item recyclerview
@@ -78,14 +89,16 @@ public class QLKS_OwnerFragment extends Fragment {
                         recyclerView.setVisibility(View.GONE);
                     } else {
                         empty.setVisibility(View.GONE);
-                        empty2.setVisibility(View.VISIBLE);
+                        empty2.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                     }
                 }
             }
         });
+
         gettenks();
         getListBook();
+        swipeRefreshLayout.setOnRefreshListener(this);
         return view;
     }
 
@@ -93,6 +106,13 @@ public class QLKS_OwnerFragment extends Fragment {
         idxinchao = view.findViewById(R.id.xinchao_id);
         empty = view.findViewById(R.id.text1);
         empty2 = view.findViewById(R.id.btnthemks);
+        empty2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddHotelActivity.class));
+            }
+        });
+        swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout);
     }
 
     private void gettenks() {
@@ -113,15 +133,15 @@ public class QLKS_OwnerFragment extends Fragment {
         });
     }
 
-    private void getListBook() {
+    public void getListBook() {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                room.clear();
+                list.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     Khachsan diaDiem = child.getValue(Khachsan.class);
                     if (tenks.equals(diaDiem.getTenks())) {
-                        room.add(diaDiem);
+                        list.add(diaDiem);
                     }
                 }
                 roomOwnerAdapter.notifyDataSetChanged();
@@ -152,4 +172,15 @@ public class QLKS_OwnerFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onRefresh() {
+        getListBook();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000);
+    }
 }
