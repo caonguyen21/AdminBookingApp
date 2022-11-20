@@ -57,7 +57,6 @@ public class RoomOwnerAdapter extends RecyclerView.Adapter<RoomOwnerAdapter.View
 
         holder.tenks.setText(ks.getTenks());
         holder.diachi.setText(ks.getDiachi());
-
         Locale localeVN = new Locale("vi", "VN");
         NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
         String get_gia = currencyVN.format(Integer.parseInt(ks.getGia()));
@@ -140,14 +139,14 @@ public class RoomOwnerAdapter extends RecyclerView.Adapter<RoomOwnerAdapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            statusks = itemView.findViewById(R.id.statusks);
-            img = itemView.findViewById(R.id.img1);
-            tenks = itemView.findViewById(R.id.tenkstext);
-            diachi = itemView.findViewById(R.id.diachitext);
-            gia = itemView.findViewById(R.id.giatext);
-            ln_linear = itemView.findViewById(R.id.ln_linear);
-            delete_book = itemView.findViewById(R.id.delete_book);
-            edit_book = itemView.findViewById(R.id.edit_book);
+            statusks = itemView.findViewById(R.id.statusks2);
+            img = itemView.findViewById(R.id.img2);
+            tenks = itemView.findViewById(R.id.tenkstext2);
+            diachi = itemView.findViewById(R.id.diachitext2);
+            gia = itemView.findViewById(R.id.giatextonwer2);
+            ln_linear = itemView.findViewById(R.id.ln_linear2);
+            delete_book = itemView.findViewById(R.id.delete_book2);
+            edit_book = itemView.findViewById(R.id.edit_book2);
         }
     }
 }

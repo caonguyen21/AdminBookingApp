@@ -16,33 +16,43 @@
         android:theme="@style/Theme.AdminBookingApp"
         tools:targetApi="31">
         <activity
+            android:name=".Owner.DetailBookedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
-
         <activity
             android:name=".Admin.DetailHotelActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
-
+        <activity
+            android:name=".Owner.ActivityUpdatePassword"
+            android:exported="false" />
         <activity
             android:name=".Admin.AdminMainScreem"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
-
         <activity
             android:name=".Owner.DetailHoteOwnerlActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
+        <activity
+            android:name=".EditProfilePage"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
+        </activity>
         <activity
             android:name=".Owner.OwnewMainScreem"
             android:exported="true"
@@ -53,31 +63,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Login.SignIn"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
-
         <activity
             android:name=".Owner.AddHotelActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
-        </activity>
 
+        </activity>
         <activity
             android:name=".Login.SignUp"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
-
         <activity
             android:name=".Owner.UpdateHotelActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
+
         </activity>
         <activity
             android:name=".Welcome"
@@ -85,8 +93,7 @@
             android:theme="@style/Theme.MaterialComponents.NoActionBar.Bridge">
 
         </activity>
-
-
     </application>
+
 
 </manifest>

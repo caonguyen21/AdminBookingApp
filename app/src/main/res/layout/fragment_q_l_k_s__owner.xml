@@ -29,9 +29,9 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/swiperefreshlayout">
+        android:layout_height="200dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_khachsan"

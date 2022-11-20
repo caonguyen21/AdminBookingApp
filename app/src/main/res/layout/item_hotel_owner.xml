@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/delete_book"
+            android:id="@+id/delete_book2"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -26,7 +26,7 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/edit_book"
+            android:id="@+id/edit_book2"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -39,12 +39,12 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/ln_linear"
+        android:id="@+id/ln_linear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/img1"
+            android:id="@+id/img2"
             android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_centerVertical="true"
@@ -53,41 +53,42 @@
             android:src="@drawable/ic_baseline_image_24" />
 
         <TextView
-            android:id="@+id/tenkstext"
+            android:id="@+id/tenkstext2"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/img1"
+            android:layout_toRightOf="@+id/img2"
             android:text="Hotel Name"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold" />
+
         <ImageView
-            android:id="@+id/statusks"
+            android:id="@+id/statusks2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/tenkstext"
+            android:layout_toRightOf="@+id/tenkstext2"
             android:src="@drawable/ic_baseline_circle_24" />
 
         <RatingBar
-            android:id="@+id/ratingBar42"
+            android:id="@+id/ratingBar422"
             style="@style/Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tenkstext"
+            android:layout_below="@+id/tenkstext2"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/img1"
+            android:layout_toRightOf="@+id/img2"
             android:rating="4" />
 
         <TextView
-            android:id="@+id/diachitext"
+            android:id="@+id/diachitext2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBar42"
+            android:layout_below="@+id/ratingBar422"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/img1"
+            android:layout_toRightOf="@+id/img2"
             android:drawableStart="@drawable/ic_outline_location_on_24"
             android:drawablePadding="10dp"
             android:text="Dia chi"
@@ -95,14 +96,14 @@
             android:textSize="20dp" />
 
         <TextView
-            android:id="@+id/giatext"
+            android:id="@+id/giatextonwer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/diachitext"
+            android:layout_below="@+id/diachitext2"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@+id/img1"
+            android:layout_toRightOf="@+id/img2"
             android:drawableStart="@drawable/ic_outline_account_balance_wallet_24"
             android:drawablePadding="5dp"
             android:text="Gia"

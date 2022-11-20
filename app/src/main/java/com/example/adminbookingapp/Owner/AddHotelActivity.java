@@ -21,6 +21,7 @@ import com.example.adminbookingapp.Model.Owner;
 import com.example.adminbookingapp.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,12 +47,12 @@ public class AddHotelActivity extends AppCompatActivity {
     private DatabaseReference reference;
     private Uri mImageUri;
     private ArrayList<Uri> ImageList = new ArrayList<Uri>();
-
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hotel);
-
+        auth = FirebaseAuth.getInstance();
         //toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_detail);
         setSupportActionBar(mToolbar);
@@ -135,15 +136,13 @@ public class AddHotelActivity extends AppCompatActivity {
     }
 
     private void gettenks() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Owner");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference("Owner");
+        reference.child(auth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    Owner owner = child.getValue(Owner.class);
-                    ksowner = owner.getTenks();
-                    tenks.setText(ksowner);
-                }
+                Owner owner = snapshot.getValue(Owner.class);
+                ksowner = owner.getTenks();
+                tenks.setText(ksowner);
             }
 
             @Override

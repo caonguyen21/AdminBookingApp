@@ -68,6 +68,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             Drawable drawable = holder.itemView.getContext().getDrawable(R.drawable.ic_baseline_circle_24_green);
             holder.status.setImageDrawable(drawable);
         }
+
         holder.onOffTrangThai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
