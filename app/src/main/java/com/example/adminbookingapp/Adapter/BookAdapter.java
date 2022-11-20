@@ -1,5 +1,7 @@
 package com.example.adminbookingapp.Adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -14,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.adminbookingapp.Model.Booked;
-import com.example.adminbookingapp.Model.User;
 import com.example.adminbookingapp.Owner.DetailBookedActivity;
 import com.example.adminbookingapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     List<Booked> list;
+    DatabaseReference reference;
 
     public BookAdapter(List<Booked> list) {
         this.list = list;
@@ -74,17 +76,31 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
         holder.onTrangThai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("phongdadat");
+                reference = FirebaseDatabase.getInstance().getReference("phongdadat");
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for (DataSnapshot child : snapshot.getChildren()) {
-                            Booked booked1 = child.getValue(Booked.class);
-                            if (booked1.getTenks().equals(booked.getTenks())) {
-                                reference.child(child.getKey()).child("status").setValue(true);
-                                Toast.makeText(v.getContext(), "Đã duyệt đơn hàng!", Toast.LENGTH_SHORT).show();
-                                break;
-                            }
+                            String uid = child.getKey();
+                            reference = FirebaseDatabase.getInstance().getReference("phongdadat").child(uid);
+                            reference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot child : snapshot.getChildren()) {
+                                        Booked value = child.getValue(Booked.class);
+                                        if (value.getTenks().equals(booked.getTenks())) {
+                                            reference.child(booked.getTenks()).child("status").setValue(true);
+                                            Toast.makeText(v.getContext(), "Đã duyệt đơn hàng!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                         }
                     }
 
@@ -96,16 +112,63 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             }
         });
 
+        holder.xoadonhang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(view.getContext())
+                        .setMessage("Bạn có muốn xóa đơn đặt phòng này không?")
+                        .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                reference = FirebaseDatabase.getInstance().getReference("phongdadat");
+                                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot child : snapshot.getChildren()) {
+                                            String uid = child.getKey();
+                                            reference = FirebaseDatabase.getInstance().getReference("phongdadat").child(uid);
+                                            reference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    for (DataSnapshot child : snapshot.getChildren()) {
+                                                        Booked value = child.getValue(Booked.class);
+                                                        if (value.getTenks().equals(booked.getTenks())) {
+                                                            reference.child(booked.getTenks()).removeValue();
+                                                            Toast.makeText(view.getContext(), "Đã xóa đơn đặt phòng!", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+
+                            }
+                        })
+                        .setNegativeButton("Không", null)
+                        .show();
+            }
+        });
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tenks, ngayden, ngaydi, tongtien, tenkh, onTrangThai;
+        TextView tenks, ngayden, ngaydi, tongtien, tenkh, onTrangThai, xoadonhang;
         RelativeLayout ln_linear;
         ImageView statusks;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            xoadonhang = itemView.findViewById(R.id.xoadonhang);
             onTrangThai = itemView.findViewById(R.id.duyetdon);
             statusks = itemView.findViewById(R.id.statusbooked);
             tenks = itemView.findViewById(R.id.tenkstext2);

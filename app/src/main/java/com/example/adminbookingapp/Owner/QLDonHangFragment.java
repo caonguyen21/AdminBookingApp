@@ -99,10 +99,25 @@ public class QLDonHangFragment extends Fragment {
                 list.clear();
                 for (DataSnapshot child : snapshot.getChildren()) {
                     String uid = child.getKey();
-                    Booked booked = snapshot.child(uid).child(ten).getValue(Booked.class);
-                    list.add(booked);
+                    reference = FirebaseDatabase.getInstance().getReference("phongdadat").child(uid);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot child : snapshot.getChildren()) {
+                                Booked value = child.getValue(Booked.class);
+                                if (value.getTenks().equals(ten)) {
+                                    list.add(value);
+                                }
+                            }
+                            bookAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
-                bookAdapter.notifyDataSetChanged();
             }
 
             @Override

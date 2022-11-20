@@ -23,16 +23,16 @@
             android:textColor="@color/white"
             android:textSize="20dp" />
 
-        <!--<TextView
-            android:id="@+id/design_bottom_sheet"
+        <TextView
+            android:id="@+id/xoadonhang"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="#d269"
-            android:text="Sửa"
+            android:text="Xóa đơn hàng"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="20dp" />-->
+            android:textSize="20dp" />
 
     </LinearLayout>
 
